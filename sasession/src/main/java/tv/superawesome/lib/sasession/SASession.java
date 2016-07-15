@@ -18,12 +18,14 @@ public class SASession {
     private String baseUrl;
     private boolean testEnabled;
     private int dauId;
+    private String version;
 
     // constructor
     private SASession() {
         setConfigurationProduction();
         setTestDisabled();
         setDauId(0);
+        setVersion("0.0.0");
     }
 
     // public singleton functions
@@ -57,6 +59,10 @@ public class SASession {
         this.dauId = dauId;
     }
 
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     // getters
 
     public String getBaseUrl () {
@@ -69,5 +75,9 @@ public class SASession {
 
     public int getDauId () {
         return dauId;
+    }
+
+    public String getVersion () {
+        return version;
     }
 }
