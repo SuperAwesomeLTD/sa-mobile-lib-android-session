@@ -7,6 +7,10 @@ import java.util.HashMap;
  */
 public class SASession {
 
+    // static constants
+    public static final int CONFIGURATION_PRODUCTION = 0;
+    public static final int CONFIGURATION_STAGING = 1;
+
     // constants
     private final static String PRODUCTION_URL = "https://ads.superawesome.tv/v2";
     private final static String STAGING_URL = "https://ads.staging.superawesome.tv/v2";
@@ -19,6 +23,7 @@ public class SASession {
     private boolean testEnabled;
     private int dauId;
     private String version;
+    private int configuration;
 
     // constructor
     private SASession() {
@@ -35,11 +40,21 @@ public class SASession {
 
     // setters
 
+    public void setConfiguration(int configuration) {
+        if (configuration == CONFIGURATION_PRODUCTION) {
+            setConfigurationProduction();
+        } else {
+            setConfigurationStaging();
+        }
+    }
+
     public void setConfigurationProduction () {
+        configuration = CONFIGURATION_PRODUCTION;
         baseUrl = PRODUCTION_URL;
     }
 
     public void setConfigurationStaging () {
+        configuration = CONFIGURATION_STAGING;
         baseUrl = STAGING_URL;
     }
 
@@ -80,4 +95,6 @@ public class SASession {
     public String getVersion () {
         return version;
     }
+
+    public int getConfiguration () { return configuration; }
 }
