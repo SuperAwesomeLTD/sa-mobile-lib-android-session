@@ -15,9 +15,6 @@ public class SASession {
     private final static String PRODUCTION_URL = "https://ads.superawesome.tv/v2";
     private final static String STAGING_URL = "https://ads.staging.superawesome.tv/v2";
 
-    // singleton instance
-    private static SASession instance = new SASession();
-
     // state variables
     private String baseUrl;
     private boolean testEnabled;
@@ -31,11 +28,6 @@ public class SASession {
         setTestDisabled();
         setDauId(0);
         setVersion("0.0.0");
-    }
-
-    // public singleton functions
-    public static SASession getInstance(){
-        return instance;
     }
 
     // setters
@@ -58,16 +50,16 @@ public class SASession {
         baseUrl = STAGING_URL;
     }
 
+    public void setTest(boolean testEnabled) {
+        this.testEnabled = testEnabled;
+    }
+
     public void setTestEnabled () {
         testEnabled = true;
     }
 
     public void setTestDisabled () {
         testEnabled = false;
-    }
-
-    public void setTest(boolean testEnabled) {
-        this.testEnabled = testEnabled;
     }
 
     public void setDauId(int dauId) {
