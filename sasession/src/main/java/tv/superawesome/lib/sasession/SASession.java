@@ -23,7 +23,7 @@ public class SASession {
     private int configuration;
 
     // constructor
-    private SASession() {
+    public SASession() {
         setConfigurationProduction();
         setTestDisabled();
         setDauId(0);
