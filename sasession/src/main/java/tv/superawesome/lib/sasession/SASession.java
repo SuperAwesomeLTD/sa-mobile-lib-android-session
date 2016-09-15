@@ -7,10 +7,6 @@ import java.util.HashMap;
  */
 public class SASession {
 
-    // static constants
-    public static final int CONFIGURATION_PRODUCTION = 0;
-    public static final int CONFIGURATION_STAGING = 1;
-
     // constants
     private final static String PRODUCTION_URL = "https://ads.superawesome.tv/v2";
     private final static String STAGING_URL = "https://ads.staging.superawesome.tv/v2";
@@ -20,46 +16,46 @@ public class SASession {
     private boolean testEnabled;
     private int dauId;
     private String version;
-    private int configuration;
+    private SAConfiguration configuration;
 
     // constructor
     public SASession() {
         setConfigurationProduction();
-        setTestDisabled();
+        disableTestMode();
         setDauId(0);
         setVersion("0.0.0");
     }
 
     // setters
 
-    public void setConfiguration(int configuration) {
-        if (configuration == CONFIGURATION_PRODUCTION) {
-            setConfigurationProduction();
+    public void setConfiguration(SAConfiguration configuration) {
+        if (configuration == SAConfiguration.PRODUCTION) {
+            this.configuration = SAConfiguration.PRODUCTION;
+            baseUrl = PRODUCTION_URL;
         } else {
-            setConfigurationStaging();
+            this.configuration = SAConfiguration.STAGING;
+            baseUrl = STAGING_URL;
         }
     }
 
     public void setConfigurationProduction () {
-        configuration = CONFIGURATION_PRODUCTION;
-        baseUrl = PRODUCTION_URL;
+        setConfiguration(SAConfiguration.PRODUCTION);
     }
 
     public void setConfigurationStaging () {
-        configuration = CONFIGURATION_STAGING;
-        baseUrl = STAGING_URL;
+        setConfiguration(SAConfiguration.STAGING);
     }
 
-    public void setTest(boolean testEnabled) {
+    public void setTestMode(boolean testEnabled) {
         this.testEnabled = testEnabled;
     }
 
-    public void setTestEnabled () {
-        testEnabled = true;
+    public void enableTestMode () {
+        setTestMode(true);
     }
 
-    public void setTestDisabled () {
-        testEnabled = false;
+    public void disableTestMode () {
+        setTestMode(false);
     }
 
     public void setDauId(int dauId) {
@@ -88,5 +84,5 @@ public class SASession {
         return version;
     }
 
-    public int getConfiguration () { return configuration; }
+    public SAConfiguration getConfiguration () { return configuration; }
 }
