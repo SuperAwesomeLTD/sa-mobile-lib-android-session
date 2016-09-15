@@ -72,7 +72,7 @@ public class SASession {
         return baseUrl;
     }
 
-    public boolean isTestEnabled () {
+    public boolean getTestMode () {
         return testEnabled;
     }
 
