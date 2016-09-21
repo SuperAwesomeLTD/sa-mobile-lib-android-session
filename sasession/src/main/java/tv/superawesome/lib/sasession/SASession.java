@@ -1,6 +1,10 @@
 package tv.superawesome.lib.sasession;
 
-import java.util.HashMap;
+import android.content.Context;
+
+import java.util.Locale;
+
+import tv.superawesome.lib.sautils.SAUtils;
 
 /**
  * Created by gabriel.coman on 15/07/16.
@@ -11,19 +15,50 @@ public class SASession {
     private final static String PRODUCTION_URL = "https://ads.superawesome.tv/v2";
     private final static String STAGING_URL = "https://ads.staging.superawesome.tv/v2";
 
+    // context
+    private SACapper capper = null;
+
     // state variables
     private String baseUrl;
     private boolean testEnabled;
     private int dauId;
     private String version;
     private SAConfiguration configuration;
+    private String packageName;
+    private String appName;
+    private SAUtils.SAConnectionType connectionType;
+    private String lang;
+    private String device;
+    private String userAgent;
 
     // constructor
-    public SASession() {
+    public SASession(Context context) {
+        capper = new SACapper(context);
         setConfigurationProduction();
         disableTestMode();
         setDauId(0);
         setVersion("0.0.0");
+        packageName = context != null ? context.getPackageName() : "unknown";
+        appName = context != null ? SAUtils.getAppLabel(context) : "unknown";
+        connectionType = context != null ? SAUtils.getNetworkConnectivity(context) : SAUtils.SAConnectionType.unknown;
+        lang = Locale.getDefault().toString();
+        device = SAUtils.getSystemSize() == SAUtils.SASystemSize.mobile ? "mobile" : "tablet";
+        userAgent = SAUtils.getUserAgent(context);
+    }
+
+    // prepare
+
+    public void prepareSession (final SASessionInterface listener) {
+        capper.getDauID(new SACapperInterface() {
+            @Override
+            public void didFindDAUId(int dauID) {
+                setDauId(dauID);
+
+                if (listener != null) {
+                    listener.sessionReady();
+                }
+            }
+        });
     }
 
     // setters
@@ -85,4 +120,32 @@ public class SASession {
     }
 
     public SAConfiguration getConfiguration () { return configuration; }
+
+    public int getCachebuster () {
+        return SAUtils.getCacheBuster();
+    }
+
+    public String getPackageName () {
+        return packageName;
+    }
+
+    public String getAppName () {
+        return appName;
+    }
+
+    public int getConnectionType () {
+        return connectionType.ordinal();
+    }
+
+    public String getLang () {
+        return lang;
+    }
+
+    public String getDevice () {
+        return device;
+    }
+
+    public String getUserAgent () {
+        return userAgent;
+    }
 }
