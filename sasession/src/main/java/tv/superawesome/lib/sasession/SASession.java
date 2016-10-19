@@ -1,6 +1,8 @@
 package tv.superawesome.lib.sasession;
 
 import android.content.Context;
+import android.os.Looper;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -14,6 +16,8 @@ public class SASession {
     // constants
     private final static String PRODUCTION_URL = "https://ads.superawesome.tv/v2";
     private final static String STAGING_URL = "https://ads.staging.superawesome.tv/v2";
+    private final static String DEVICE_PHONE = "phone";
+    private final static String DEVICE_TABLET = "tablet";
 
     // context
     private SACapper capper = null;
@@ -42,8 +46,14 @@ public class SASession {
         appName = context != null ? SAUtils.getAppLabel(context) : "unknown";
         connectionType = context != null ? SAUtils.getNetworkConnectivity(context) : SAUtils.SAConnectionType.unknown;
         lang = Locale.getDefault().toString();
-        device = SAUtils.getSystemSize() == SAUtils.SASystemSize.mobile ? "mobile" : "tablet";
-        userAgent = SAUtils.getUserAgent(context);
+        device = SAUtils.getSystemSize() == SAUtils.SASystemSize.phone ? DEVICE_PHONE : DEVICE_TABLET;
+
+        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+            userAgent = SAUtils.getUserAgent(context);
+        } else {
+            userAgent = SAUtils.getUserAgent(null);
+        }
+
     }
 
     // prepare
