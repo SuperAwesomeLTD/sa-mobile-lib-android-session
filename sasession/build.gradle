@@ -82,5 +82,5 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'tv.superawesome.lib.sautils:sautils:0.2.7'
+    compile 'tv.superawesome.lib.sautils:sautils:0.2.8'
 }
