@@ -11,11 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8fa4aea-bae6-48e4-ac15-05f5e4ad72e8" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/sautils_0_2_7.xml" afterPath="$PROJECT_DIR$/.idea/libraries/sautils_0_2_8.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sasession/build.gradle" afterPath="$PROJECT_DIR$/sasession/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sasession/sasession.iml" afterPath="$PROJECT_DIR$/sasession/sasession.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sasession/src/main/java/tv/superawesome/lib/sasession/SASession.java" afterPath="$PROJECT_DIR$/sasession/src/main/java/tv/superawesome/lib/sasession/SASession.java" />
     </list>
     <ignored path="sa-mobile-lib-android-session.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -164,7 +162,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/SASession_Tests.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+              <caret line="243" column="0" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -174,7 +172,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/TestSuite.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -196,11 +194,9 @@
         <entry file="file://$PROJECT_DIR$/sasession/src/main/java/tv/superawesome/lib/sasession/SASession.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="54" column="9" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
+              <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3678#3679#0" expanded="true" />
-                <element signature="e#3712#3713#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -239,7 +235,7 @@
       <file leaf-file-name="local.properties" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/local.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3318584">
+            <state vertical-scroll-proportion="0.19280206">
               <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
               <folding />
             </state>
@@ -719,9 +715,9 @@
                 <option name="name" value="prepareReleaseUnitTestDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare tv.superawesome.lib.sasession:sasession:0.1.9" />
+                <option name="description" value="Prepare tv.superawesome.lib.sasession:sasession:0.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareTvSuperawesomeLibSasessionSasession019Library" />
+                <option name="name" value="prepareTvSuperawesomeLibSasessionSasession020Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare tv.superawesome.lib.sautils:sautils:0.2.8" />
@@ -1373,9 +1369,9 @@
                 <option name="name" value="prepareReleaseUnitTestDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare tv.superawesome.lib.sasession:sasession:0.1.9" />
+                <option name="description" value="Prepare tv.superawesome.lib.sasession:sasession:0.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareTvSuperawesomeLibSasessionSasession019Library" />
+                <option name="name" value="prepareTvSuperawesomeLibSasessionSasession020Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare tv.superawesome.lib.sautils:sautils:0.2.8" />
@@ -2604,10 +2600,10 @@
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/ApplicationTest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/superawesome/tv/sasessiondemo/MainActivity.java" />
-        <option value="$PROJECT_DIR$/sasession/src/main/java/tv/superawesome/lib/sasession/SASession.java" />
-        <option value="$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/SASession_Tests.java" />
         <option value="$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/TestSuite.java" />
         <option value="$PROJECT_DIR$/sasession/build.gradle" />
+        <option value="$PROJECT_DIR$/sasession/src/main/java/tv/superawesome/lib/sasession/SASession.java" />
+        <option value="$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/SASession_Tests.java" />
         <option value="$PROJECT_DIR$/local.properties" />
       </list>
     </option>
@@ -2641,7 +2637,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2658,6 +2655,28 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="sa-mobile-lib-android-session" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sasession" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sa-mobile-lib-android-session" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sasession" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sasession" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2708,9 +2727,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3159,7 +3177,7 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestSuite - 2016.10.31 at 10h 07m 47s.xml">
+    <history-entry file="TestSuite - 2016.11.02 at 09h 44m 45s.xml">
       <configuration name="TestSuite" configurationId="AndroidTestRunConfigurationType" />
     </history-entry>
     <history-entry file="testValues() - 2016.10.19 at 12h 43m 38s.xml">
@@ -3213,7 +3231,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19670959" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4044665" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4044665" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3269,8 +3287,6 @@
           <caret line="148" column="25" selection-start-line="148" selection-start-column="25" selection-end-line="148" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3342,8 +3358,6 @@
           <caret line="74" column="30" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3378,8 +3392,6 @@
           <caret line="86" column="26" selection-start-line="86" selection-start-column="26" selection-end-line="86" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3414,8 +3426,6 @@
           <caret line="25" column="10" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3442,8 +3452,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3470,8 +3478,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3498,8 +3504,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3526,8 +3530,6 @@
           <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3608,30 +3610,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sasession/src/main/java/tv/superawesome/lib/sasession/SASession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="9" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3712#3713#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/superawesome/tv/sasessiondemo/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/SASession_Tests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -3652,10 +3634,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/SASession_Tests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="243" column="0" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/superawesome/tv/sasessiondemo/TestSuite.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sasession/src/main/java/tv/superawesome/lib/sasession/SASession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -3664,7 +3664,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3318584">
+        <state vertical-scroll-proportion="0.19280206">
           <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
           <folding />
         </state>

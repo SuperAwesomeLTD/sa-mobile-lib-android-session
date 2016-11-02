@@ -143,8 +143,8 @@ public class SASession {
         return appName;
     }
 
-    public int getConnectionType () {
-        return connectionType.ordinal();
+    public SAUtils.SAConnectionType getConnectionType () {
+        return connectionType;
     }
 
     public String getLang () {
