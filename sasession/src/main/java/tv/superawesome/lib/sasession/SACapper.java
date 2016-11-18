@@ -81,6 +81,9 @@ public class SACapper {
                     // create the dauID
                     String secondPartOfDAU = preferences.getString(SUPER_AWESOME_FIRST_PART_DAU, null);
 
+                    // third part of dauid
+                    String thirdPartOfDau = context != null ? context.getPackageName() : "unknown";
+
                     if (secondPartOfDAU == null || secondPartOfDAU.isEmpty()) {
                         SharedPreferences.Editor editor = preferences.edit();
                         secondPartOfDAU = SAUtils.generateUniqueKey();
@@ -90,7 +93,8 @@ public class SACapper {
 
                     int hash1 = Math.abs(firstPartOfDAU.hashCode());
                     int hash2 = Math.abs(secondPartOfDAU.hashCode());
-                    int dauHash = Math.abs(hash1 ^ hash2);
+                    int hash3 = Math.abs(thirdPartOfDau.hashCode());
+                    int dauHash = Math.abs(hash1 ^ hash2 ^ hash3);
 
                     if (listener != null){
                         listener.didFindDAUId(dauHash);
