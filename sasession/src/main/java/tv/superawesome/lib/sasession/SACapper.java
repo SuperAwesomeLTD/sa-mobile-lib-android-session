@@ -1,114 +1,136 @@
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 package tv.superawesome.lib.sasession;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
-import java.lang.reflect.InvocationTargetException;
-
+import tv.superawesome.lib.sanetwork.asynctask.SAAsyncTask;
+import tv.superawesome.lib.sanetwork.asynctask.SAAsyncTaskInterface;
 import tv.superawesome.lib.sautils.SAUtils;
 
 /**
- * Created by gabriel.coman on 21/09/16.
+ * Class that abstracts away generating a distinct ID called "DAU ID", which consists of:
+ *  - the Advertising ID int
+ *  - a random ID
+ *  - the package name
+ * each hashed and then XOR-ed together
  */
 public class SACapper {
 
-    // constant that specifies the local-pref dict key to use
+    // constants
+    private static final String GOOGLE_ADVERTISING_CLASS = "com.google.android.gms.ads.identifier.AdvertisingIdClient";
+    private static final String GOOGLE_ADVERTISING_ID_CLASS = "com.google.android.gms.ads.identifier.AdvertisingIdClient$Info";
+    private static final String GOOGLE_ADVERTISING_INFO_METHOD = "getAdvertisingIdInfo";
+    private static final String GOOGLE_ADVERTISING_TRACKING_METHOD = "isLimitAdTrackingEnabled";
+    private static final String GOOGLE_ADVERTISING_ID_METHOD = "getId";
     private static final String SUPER_AWESOME_FIRST_PART_DAU = "SUPER_AWESOME_FIRST_PART_DAU";
 
+    // private current context
     private Context context = null;
 
+    /**
+     * Main constructor for the capper, which takes the current context as paramter
+     *
+     * @param context the current context (activity or fragment)
+     */
     public SACapper (Context context) {
         this.context = context;
     }
 
     /**
-     * static method to enable Capping
-     * Through it's listener interface it returns a dauID
-     * The dauID can be non-0 -> in which case it's valid
-     * or it can be 0 -> in which case it's not valid (user does not have tracking enabled or
-     * gms enabled)
-     **/
-    public void getDauID(final SACapperInterface listener) {
+     * Main capper method that takes an SACapperInterface interface instance as parameter, to be
+     * able to sent back the generated ID when the async operation finishes
+     *
+     * @param listener1 an instance of the SACapperInterface
+     */
+    public void getDauID(final SACapperInterface listener1) {
 
-        // guard against horrible errors!
-        if (!SAUtils.isClassAvailable("com.google.android.gms.ads.identifier.AdvertisingIdClient") || context == null) {
-            listener.didFindDAUId(0);
+        // get a listener that's never going to be null
+        final SACapperInterface listener = listener1 != null ? listener1 : new SACapperInterface() {@Override public void didFindDAUID(int dauID) {}};
+
+        // guard against this class not being available or th context being null
+        if (!SAUtils.isClassAvailable(GOOGLE_ADVERTISING_CLASS) || context == null) {
+            listener.didFindDAUID(0);
             return;
         }
 
-        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+        new SAAsyncTask<>(context, new SAAsyncTaskInterface<String>() {
+            /**
+             * Overridden method that describes the task to be executed. In this case, we're
+             * using reflection to async pull the Google Advertising ID string
+             *
+             * @return           either an advertising String or an empty string
+             * @throws Exception any type of exception thrown by the google code
+             */
             @Override
-            protected String doInBackground(Void... params) {
+            public String taskToExecute() throws Exception {
 
-                try {
-                    Class<?> advertisingIdClass = Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient");
-                    java.lang.reflect.Method getAdvertisingIdInfo = advertisingIdClass.getMethod("getAdvertisingIdInfo", Context.class);
-                    Object adInfo = getAdvertisingIdInfo.invoke(advertisingIdClass, context);
+                Class<?> advertisingIdClass = Class.forName(GOOGLE_ADVERTISING_CLASS);
+                java.lang.reflect.Method getAdvertisingIdInfo = advertisingIdClass.getMethod(GOOGLE_ADVERTISING_INFO_METHOD, Context.class);
+                Object adInfo = getAdvertisingIdInfo.invoke(advertisingIdClass, context);
 
-                    Class<?> advertisingIdInfoClass = Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info");
+                Class<?> advertisingIdInfoClass = Class.forName(GOOGLE_ADVERTISING_ID_CLASS);
 
-                    java.lang.reflect.Method isLimitAdTrackingEnabled = advertisingIdInfoClass.getMethod("isLimitAdTrackingEnabled");
-                    java.lang.reflect.Method getId = advertisingIdInfoClass.getMethod("getId");
+                java.lang.reflect.Method isLimitAdTrackingEnabled = advertisingIdInfoClass.getMethod(GOOGLE_ADVERTISING_TRACKING_METHOD);
+                java.lang.reflect.Method getId = advertisingIdInfoClass.getMethod(GOOGLE_ADVERTISING_ID_METHOD);
 
-                    Boolean isEnabled = (Boolean) isLimitAdTrackingEnabled.invoke(adInfo);
-                    if (!isEnabled) {
-                        return (String) getId.invoke(adInfo);
-                    }
-                } catch (ClassNotFoundException e) {
-                    return "";
-                } catch (NoSuchMethodException e) {
-                    return "";
-                } catch (InvocationTargetException e) {
-                    return "";
-                } catch (IllegalAccessException e) {
-                    return "";
-                }
-
-                return "";
+                Boolean isEnabled = (Boolean) isLimitAdTrackingEnabled.invoke(adInfo);
+                return !isEnabled ? (String) getId.invoke(adInfo) : "";
             }
 
+            /**
+             * When the operation finishes, there should be a valid (or empty) first part of the
+             * DAU ID string, corresponding to the Google Advertising ID
+             *
+             * @param firstPartOfDAU the Google Advertising ID
+             */
             @Override
-            protected void onPostExecute(String firstPartOfDAU) {
-                super.onPostExecute(firstPartOfDAU);
+            public void onFinish(String firstPartOfDAU) {
 
-                if (firstPartOfDAU != null && !firstPartOfDAU.isEmpty()){
+                if (firstPartOfDAU != null && !firstPartOfDAU.isEmpty()) {
 
-                    // continue as if  user has Ad Tracking enabled and all
+                    // continue as if user has Ad Tracking enabled and all
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-                    // create the dauID
+                    // get the second part of the DAU ID
                     String secondPartOfDAU = preferences.getString(SUPER_AWESOME_FIRST_PART_DAU, null);
 
-                    // third part of dauid
-                    String thirdPartOfDau = context != null ? context.getPackageName() : "unknown";
-
+                    // if the second part of the DAU ID is empty then generate & save a new one
                     if (secondPartOfDAU == null || secondPartOfDAU.isEmpty()) {
-                        SharedPreferences.Editor editor = preferences.edit();
                         secondPartOfDAU = SAUtils.generateUniqueKey();
-                        editor.putString(SUPER_AWESOME_FIRST_PART_DAU, secondPartOfDAU);
-                        editor.apply();
+                        preferences.edit().putString(SUPER_AWESOME_FIRST_PART_DAU, secondPartOfDAU).apply();
                     }
 
+                    // form the third part of the DAU ID as the package name
+                    String thirdPartOfDau = context != null ? context.getPackageName() : "unknown";
+
+                    // generate three hashes for the three strings
                     int hash1 = Math.abs(firstPartOfDAU.hashCode());
                     int hash2 = Math.abs(secondPartOfDAU.hashCode());
                     int hash3 = Math.abs(thirdPartOfDau.hashCode());
-                    int dauHash = Math.abs(hash1 ^ hash2 ^ hash3);
+                    // and do a XOR on them
+                    int dauID = Math.abs(hash1 ^ hash2 ^ hash3);
 
-                    if (listener != null){
-                        listener.didFindDAUId(dauHash);
-                    }
+                    // finally call the listener to sent the DAU ID
+                    listener.didFindDAUID(dauID);
                 }
                 // either the service is not available or the user does not have Google Play Services
                 else {
-                    if (listener != null) {
-                        listener.didFindDAUId(0);
-                    }
+                    listener.didFindDAUID(0);
                 }
             }
-        };
-        task.execute();
-    }
 
+            /**
+             *
+             */
+            @Override
+            public void onError() {
+                listener.didFindDAUID(0);
+            }
+        });
+    }
 }

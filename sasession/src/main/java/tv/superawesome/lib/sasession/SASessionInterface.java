@@ -1,8 +1,17 @@
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 package tv.superawesome.lib.sasession;
 
 /**
- * Created by gabriel.coman on 21/09/16.
+ * Interface for the SASession class
  */
 public interface SASessionInterface {
-    void sessionReady ();
+
+    /**
+     * Method that is used to send a message to the SDK saying the session is finally ready
+     * and ad loading should commence
+     */
+    void didFindSessionReady();
 }

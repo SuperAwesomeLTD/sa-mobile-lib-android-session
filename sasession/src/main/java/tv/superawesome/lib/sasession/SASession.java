@@ -1,15 +1,19 @@
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 package tv.superawesome.lib.sasession;
 
 import android.content.Context;
 import android.os.Looper;
-import android.util.Log;
 
 import java.util.Locale;
 
 import tv.superawesome.lib.sautils.SAUtils;
 
 /**
- * Created by gabriel.coman on 15/07/16.
+ * Class that manages an AwesomeAds session, containing all variables needed to setup loading for
+ * a certain ad
  */
 public class SASession {
 
@@ -19,10 +23,10 @@ public class SASession {
     private final static String DEVICE_PHONE = "phone";
     private final static String DEVICE_TABLET = "tablet";
 
-    // context
+    // the current frequency capper
     private SACapper capper = null;
 
-    // state variables
+    // private state members
     private String baseUrl;
     private boolean testEnabled;
     private int dauId;
@@ -35,9 +39,16 @@ public class SASession {
     private String device;
     private String userAgent;
 
-    // constructor
+    /**
+     * Main constructor for the Session
+     *
+     * @param context current context (activity or fragment)
+     */
     public SASession(Context context) {
+        // create the capper
         capper = new SACapper(context);
+
+        // set default configuration
         setConfigurationProduction();
         disableTestMode();
         setDauId(0);
@@ -48,6 +59,8 @@ public class SASession {
         lang = Locale.getDefault().toString();
         device = SAUtils.getSystemSize() == SAUtils.SASystemSize.phone ? DEVICE_PHONE : DEVICE_TABLET;
 
+        // get user agent if the current thread is the main one (otherwise this will crash
+        // in some scenarios)
         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
             userAgent = SAUtils.getUserAgent(context);
         } else {
@@ -56,23 +69,30 @@ public class SASession {
 
     }
 
-    // prepare
-
+    /**
+     * Method that "prepares" the session. Mainly this means getting the DAU ID integer, which has
+     * to be done on a secondary thread
+     *
+     * @param listener an instance of the SASessionInterface
+     */
     public void prepareSession (final SASessionInterface listener) {
         capper.getDauID(new SACapperInterface() {
             @Override
-            public void didFindDAUId(int dauID) {
+            public void didFindDAUID(int dauID) {
                 setDauId(dauID);
 
                 if (listener != null) {
-                    listener.sessionReady();
+                    listener.didFindSessionReady();
                 }
             }
         });
     }
 
-    // setters
-
+    /**
+     * Explicit configuration setup, which also sets the base session URL
+     *
+     * @param configuration a new configuration enum
+     */
     public void setConfiguration(SAConfiguration configuration) {
         if (configuration == SAConfiguration.PRODUCTION) {
             this.configuration = SAConfiguration.PRODUCTION;
@@ -83,78 +103,163 @@ public class SASession {
         }
     }
 
+    /**
+     * Implicit production setter
+     */
     public void setConfigurationProduction () {
         setConfiguration(SAConfiguration.PRODUCTION);
     }
 
+    /**
+     * Implicit staging setter
+     */
     public void setConfigurationStaging () {
         setConfiguration(SAConfiguration.STAGING);
     }
 
+    /**
+     * Explicit test setup
+     *
+     * @param testEnabled the new setup, as a bool
+     */
     public void setTestMode(boolean testEnabled) {
         this.testEnabled = testEnabled;
     }
 
+    /**
+     * Implicit test enabled setter
+     */
     public void enableTestMode () {
         setTestMode(true);
     }
 
+    /**
+     * Implicit test disabled setter
+     */
     public void disableTestMode () {
         setTestMode(false);
     }
 
+    /**
+     * Setter for the DAU ID value
+     *
+     * @param dauId the new DAU ID integer
+     */
     public void setDauId(int dauId) {
         this.dauId = dauId;
     }
 
+    /**
+     * Version setter
+     *
+     * @param version new version string
+     */
     public void setVersion(String version) {
         this.version = version;
     }
 
-    // getters
-
+    /**
+     * Getter for the base url
+     *
+     * @return the current base URL
+     */
     public String getBaseUrl () {
         return baseUrl;
     }
 
+    /**
+     * Getter for the test model
+     *
+     * @return the current testEnabled variable
+     */
     public boolean getTestMode () {
         return testEnabled;
     }
 
+    /**
+     * Getter for the DAU ID
+     *
+     * @return the current dauId variable
+     */
     public int getDauId () {
         return dauId;
     }
 
+    /**
+     * Getter for the version
+     *
+     * @return the current version variable
+     */
     public String getVersion () {
         return version;
     }
 
+    /**
+     * Getter for the configuration
+     *
+     * @return the current configuration variable
+     */
     public SAConfiguration getConfiguration () { return configuration; }
 
+    /**
+     * Getter for the cache buster
+     *
+     * @return a random int
+     */
     public int getCachebuster () {
         return SAUtils.getCacheBuster();
     }
 
+    /**
+     * Getter for the package name
+     *
+     * @return the current package name
+     */
     public String getPackageName () {
         return packageName;
     }
 
+    /**
+     * Getter for the app name
+     *
+     * @return the current app name
+     */
     public String getAppName () {
         return appName;
     }
 
+    /**
+     * Getter for the connection type
+     *
+     * @return the current connection type enum
+     */
     public SAUtils.SAConnectionType getConnectionType () {
         return connectionType;
     }
 
+    /**
+     * Getter for the current language
+     *
+     * @return the current lang variable (as en_US)
+     */
     public String getLang () {
         return lang;
     }
 
+    /**
+     * Getter for the current device
+     *
+     * @return the current device variable ("phone" or "tablet")
+     */
     public String getDevice () {
         return device;
     }
 
+    /**
+     * Getter for the current user agent
+     *
+     * @return the current userAgent variable
+     */
     public String getUserAgent () {
         return userAgent;
     }

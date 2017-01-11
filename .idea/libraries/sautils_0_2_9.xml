@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="sautils-0.2.9">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/sasession/build/intermediates/exploded-aar/tv.superawesome.lib.sautils/sautils/0.2.9/res" />
+      <root url="jar://$PROJECT_DIR$/sasession/build/intermediates/exploded-aar/tv.superawesome.lib.sautils/sautils/0.2.9/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
