@@ -6,8 +6,8 @@ package tv.superawesome.lib.sasession;
 
 /**
  * This enum holds the two possible ad server configurations the SDK should respond to:
- *  - PRODUCTIOn
- *   - STAGING
+ * - PRODUCTION
+ * - STAGING
  */
 public enum SAConfiguration {
     PRODUCTION(0),
@@ -27,12 +27,11 @@ public enum SAConfiguration {
     /**
      * Factory creation method from an integer value
      *
-     * @param value integer value (should be either 0 or 1)
-     * @return      a new SAConfiguration enum
+     * @param configuration integer value (should be either 0 or 1)
+     * @return              a new SAConfiguration enum
      */
-    public static SAConfiguration fromValue (int value) {
-        if (value == 0) return PRODUCTION;
-        return STAGING;
+    public static SAConfiguration fromValue (int configuration) {
+        return configuration == 0 ? PRODUCTION : STAGING;
     }
 
     /**
