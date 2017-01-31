@@ -1,6 +1,7 @@
 build/*
-app/*
 wrapper/*
 .gradle/*
 local.properties
+sasession/java_pid*
 java_pid*
+app/java_pid*
