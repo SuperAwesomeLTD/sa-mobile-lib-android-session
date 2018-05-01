@@ -8,8 +8,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import tv.superawesome.lib.sanetwork.asynctask.SAAsyncTask;
-import tv.superawesome.lib.sanetwork.asynctask.SAAsyncTaskInterface;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import tv.superawesome.lib.sautils.SAUtils;
 
 /**
@@ -20,6 +21,8 @@ import tv.superawesome.lib.sautils.SAUtils;
  * each hashed and then XOR-ed together
  */
 public class SACapper {
+
+    private Executor executor;
 
     // constants
     private static final String GOOGLE_ADVERTISING_CLASS = "com.google.android.gms.ads.identifier.AdvertisingIdClient";
@@ -39,6 +42,17 @@ public class SACapper {
      */
     public SACapper (Context context) {
         this.context = context;
+        this.executor = Executors.newSingleThreadExecutor();
+    }
+
+    /**
+     * Constructor with executor
+     * @param context the current context (activity or fragment)
+     * @param executor an injected executor
+     */
+    public SACapper (Context context, Executor executor) {
+        this.context = context;
+        this.executor = executor;
     }
 
     /**
@@ -58,78 +72,59 @@ public class SACapper {
             return;
         }
 
-        new SAAsyncTask<>(context, new SAAsyncTaskInterface<String>() {
-            /**
-             * Overridden method that describes the task to be executed. In this case, we're
-             * using reflection to async pull the Google Advertising ID string
-             *
-             * @return           either an advertising String or an empty string
-             * @throws Exception any type of exception thrown by the google code
-             */
+        executor.execute(new Runnable() {
             @Override
-            public String taskToExecute() throws Exception {
+            public void run() {
+                try {
 
-                Class<?> advertisingIdClass = Class.forName(GOOGLE_ADVERTISING_CLASS);
-                java.lang.reflect.Method getAdvertisingIdInfo = advertisingIdClass.getMethod(GOOGLE_ADVERTISING_INFO_METHOD, Context.class);
-                Object adInfo = getAdvertisingIdInfo.invoke(advertisingIdClass, context);
+                    Class<?> advertisingIdClass = Class.forName(GOOGLE_ADVERTISING_CLASS);
+                    java.lang.reflect.Method getAdvertisingIdInfo = advertisingIdClass.getMethod(GOOGLE_ADVERTISING_INFO_METHOD, Context.class);
+                    Object adInfo = getAdvertisingIdInfo.invoke(advertisingIdClass, context);
 
-                Class<?> advertisingIdInfoClass = Class.forName(GOOGLE_ADVERTISING_ID_CLASS);
+                    Class<?> advertisingIdInfoClass = Class.forName(GOOGLE_ADVERTISING_ID_CLASS);
 
-                java.lang.reflect.Method isLimitAdTrackingEnabled = advertisingIdInfoClass.getMethod(GOOGLE_ADVERTISING_TRACKING_METHOD);
-                java.lang.reflect.Method getId = advertisingIdInfoClass.getMethod(GOOGLE_ADVERTISING_ID_METHOD);
+                    java.lang.reflect.Method isLimitAdTrackingEnabled = advertisingIdInfoClass.getMethod(GOOGLE_ADVERTISING_TRACKING_METHOD);
+                    java.lang.reflect.Method getId = advertisingIdInfoClass.getMethod(GOOGLE_ADVERTISING_ID_METHOD);
 
-                Boolean isEnabled = (Boolean) isLimitAdTrackingEnabled.invoke(adInfo);
-                return !isEnabled ? (String) getId.invoke(adInfo) : "";
-            }
+                    Boolean isEnabled = (Boolean) isLimitAdTrackingEnabled.invoke(adInfo);
 
-            /**
-             * When the operation finishes, there should be a valid (or empty) first part of the
-             * DAU ID string, corresponding to the Google Advertising ID
-             *
-             * @param firstPartOfDAU the Google Advertising ID
-             */
-            @Override
-            public void onFinish(String firstPartOfDAU) {
+                    String firstPartOfDAU = !isEnabled ? (String) getId.invoke(adInfo) : "";
 
-                if (firstPartOfDAU != null && !firstPartOfDAU.isEmpty()) {
+                    if (firstPartOfDAU != null && !firstPartOfDAU.isEmpty()) {
 
-                    // continue as if user has Ad Tracking enabled and all
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                        // continue as if user has Ad Tracking enabled and all
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-                    // get the second part of the DAU ID
-                    String secondPartOfDAU = preferences.getString(SUPER_AWESOME_FIRST_PART_DAU, null);
+                        // get the second part of the DAU ID
+                        String secondPartOfDAU = preferences.getString(SUPER_AWESOME_FIRST_PART_DAU, null);
 
-                    // if the second part of the DAU ID is empty then generate & save a new one
-                    if (secondPartOfDAU == null || secondPartOfDAU.isEmpty()) {
-                        secondPartOfDAU = SAUtils.generateUniqueKey();
-                        preferences.edit().putString(SUPER_AWESOME_FIRST_PART_DAU, secondPartOfDAU).apply();
+                        // if the second part of the DAU ID is empty then generate & save a new one
+                        if (secondPartOfDAU == null || secondPartOfDAU.isEmpty()) {
+                            secondPartOfDAU = SAUtils.generateUniqueKey();
+                            preferences.edit().putString(SUPER_AWESOME_FIRST_PART_DAU, secondPartOfDAU).apply();
+                        }
+
+                        // form the third part of the DAU ID as the package name
+                        String thirdPartOfDau = context != null ? context.getPackageName() : "unknown";
+
+                        // generate three hashes for the three strings
+                        int hash1 = Math.abs(firstPartOfDAU.hashCode());
+                        int hash2 = Math.abs(secondPartOfDAU.hashCode());
+                        int hash3 = Math.abs(thirdPartOfDau.hashCode());
+                        // and do a XOR on them
+                        int dauID = Math.abs(hash1 ^ hash2 ^ hash3);
+
+                        // finally call the listener to sent the DAU ID
+                        listener.didFindDAUID(dauID);
+                    }
+                    // either the service is not available or the user does not have Google Play Services
+                    else {
+                        listener.didFindDAUID(0);
                     }
 
-                    // form the third part of the DAU ID as the package name
-                    String thirdPartOfDau = context != null ? context.getPackageName() : "unknown";
-
-                    // generate three hashes for the three strings
-                    int hash1 = Math.abs(firstPartOfDAU.hashCode());
-                    int hash2 = Math.abs(secondPartOfDAU.hashCode());
-                    int hash3 = Math.abs(thirdPartOfDau.hashCode());
-                    // and do a XOR on them
-                    int dauID = Math.abs(hash1 ^ hash2 ^ hash3);
-
-                    // finally call the listener to sent the DAU ID
-                    listener.didFindDAUID(dauID);
-                }
-                // either the service is not available or the user does not have Google Play Services
-                else {
+                } catch (Exception e) {
                     listener.didFindDAUID(0);
                 }
-            }
-
-            /**
-             *
-             */
-            @Override
-            public void onError() {
-                listener.didFindDAUID(0);
             }
         });
     }
