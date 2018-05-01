@@ -93,6 +93,8 @@ dependencies {
 
     testImplementation files('libs/json.jar')
 
+    testImplementation 'com.google.android.gms:play-services-ads:15.0.0'
+
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

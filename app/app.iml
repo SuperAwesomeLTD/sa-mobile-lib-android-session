@@ -98,6 +98,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="play-services-ads-base-15.0.0" level="project" />
     <orderEntry type="library" name="support-core-ui-26.1.0" level="project" />
     <orderEntry type="library" name="support-media-compat-26.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="espresso-core-2.0" level="project" />
@@ -108,9 +109,14 @@
     <orderEntry type="library" name="support-vector-drawable-26.1.0" level="project" />
     <orderEntry type="library" name="support-core-utils-26.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="hamcrest-integration-1.1" level="project" />
+    <orderEntry type="library" name="play-services-ads-identifier-15.0.0" level="project" />
+    <orderEntry type="library" name="play-services-gass-15.0.0" level="project" />
+    <orderEntry type="library" name="play-services-basement-15.0.0" level="project" />
+    <orderEntry type="library" name="play-services-ads-15.0.0" level="project" />
+    <orderEntry type="library" name="play-services-ads-lite-15.0.0" level="project" />
     <orderEntry type="library" name="transition-26.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="jsr305-2.0.1" level="project" />
-    <orderEntry type="library" name="play-services-ads-8.4.0" level="project" />
+    <orderEntry type="library" name="customtabs-26.1.0" level="project" />
     <orderEntry type="library" name="support-compat-26.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="javax.annotation-api-1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="javax.inject-1" level="project" />
@@ -130,7 +136,6 @@
     <orderEntry type="library" name="design-26.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="testing-support-lib-0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="espresso-idling-resource-2.0" level="project" />
-    <orderEntry type="library" name="play-services-basement-8.4.0" level="project" />
     <orderEntry type="module" module-name="sasession" />
   </component>
 </module>
