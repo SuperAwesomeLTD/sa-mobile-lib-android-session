@@ -2,7 +2,7 @@
  * @Copyright:   SuperAwesome Trading Limited 2017
  * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
  */
-package tv.superawesome.lib.sasession;
+package tv.superawesome.lib.sasession.defines;
 
 /**
  * This enum holds the two possible ad server configurations the SDK should respond to:

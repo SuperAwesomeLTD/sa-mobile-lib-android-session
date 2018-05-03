@@ -2,13 +2,21 @@
  * @Copyright:   SuperAwesome Trading Limited 2017
  * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
  */
-package tv.superawesome.lib.sasession;
+package tv.superawesome.lib.sasession.session;
 
 import android.content.Context;
 import android.os.Looper;
 
 import java.util.Locale;
 
+import tv.superawesome.lib.sasession.capper.SACapper;
+import tv.superawesome.lib.sasession.capper.SACapperInterface;
+import tv.superawesome.lib.sasession.defines.SAConfiguration;
+import tv.superawesome.lib.sasession.defines.SARTBInstl;
+import tv.superawesome.lib.sasession.defines.SARTBPlaybackMethod;
+import tv.superawesome.lib.sasession.defines.SARTBPosition;
+import tv.superawesome.lib.sasession.defines.SARTBSkip;
+import tv.superawesome.lib.sasession.defines.SARTBStartDelay;
 import tv.superawesome.lib.sautils.SAUtils;
 
 /**
@@ -18,26 +26,33 @@ import tv.superawesome.lib.sautils.SAUtils;
 public class SASession {
 
     // constants
-    private final static String PRODUCTION_URL = "https://ads.superawesome.tv/v2";
-    private final static String STAGING_URL = "https://ads.staging.superawesome.tv/v2";
-    private final static String DEVICE_PHONE = "phone";
-    private final static String DEVICE_TABLET = "tablet";
+    private final static String      PRODUCTION_URL = "https://ads.superawesome.tv/v2";
+    private final static String      STAGING_URL = "https://ads.staging.superawesome.tv/v2";
+    private final static String      DEVICE_PHONE = "phone";
+    private final static String      DEVICE_TABLET = "tablet";
 
     // the current frequency capper
-    private SACapper capper = null;
+    private SACapper                 capper = null;
 
     // private state members
-    private String baseUrl;
-    private boolean testEnabled;
-    private int dauId;
-    private String version;
-    private SAConfiguration configuration;
-    private String packageName;
-    private String appName;
+    private String                   baseUrl;
+    private boolean                  testEnabled;
+    private int                      dauId;
+    private String                   version;
+    private String                   packageName;
+    private String                   appName;
     private SAUtils.SAConnectionType connectionType;
-    private String lang;
-    private String device;
-    private String userAgent;
+    private String                   lang;
+    private String                   device;
+    private String                   userAgent;
+    private SAConfiguration          configuration;
+    private SARTBInstl               instl;
+    private SARTBPosition            pos;
+    private SARTBSkip                skip;
+    private SARTBStartDelay          startDelay;
+    private SARTBPlaybackMethod      playbackMethod;
+    private int                      width;
+    private int                      height;
 
     /**
      * Main constructor for the Session
@@ -58,6 +73,13 @@ public class SASession {
         connectionType = context != null ? SAUtils.getNetworkConnectivity(context) : SAUtils.SAConnectionType.unknown;
         lang = Locale.getDefault().toString();
         device = SAUtils.getSystemSize() == SAUtils.SASystemSize.phone ? DEVICE_PHONE : DEVICE_TABLET;
+        instl = SARTBInstl.FULLSCREEN;
+        pos = SARTBPosition.FULLSCREEN;
+        skip = SARTBSkip.NO_SKIP;
+        startDelay = SARTBStartDelay.PRE_ROLL;
+        playbackMethod = SARTBPlaybackMethod.WITH_SOUND_ON_SCREEN;
+        width = 0;
+        height = 0;
 
         // get user agent if the current thread is the main one (otherwise this will crash
         // in some scenarios)
@@ -89,10 +111,9 @@ public class SASession {
     }
 
     /**
-     * Explicit configuration setup, which also sets the base session URL
-     *
-     * @param configuration a new configuration enum
+     * Setters
      */
+
     public void setConfiguration(SAConfiguration configuration) {
         if (configuration == SAConfiguration.PRODUCTION) {
             this.configuration = SAConfiguration.PRODUCTION;
@@ -103,164 +124,137 @@ public class SASession {
         }
     }
 
-    /**
-     * Implicit production setter
-     */
     public void setConfigurationProduction () {
         setConfiguration(SAConfiguration.PRODUCTION);
     }
 
-    /**
-     * Implicit staging setter
-     */
     public void setConfigurationStaging () {
         setConfiguration(SAConfiguration.STAGING);
     }
 
-    /**
-     * Explicit test setup
-     *
-     * @param testEnabled the new setup, as a bool
-     */
     public void setTestMode(boolean testEnabled) {
         this.testEnabled = testEnabled;
     }
 
-    /**
-     * Implicit test enabled setter
-     */
     public void enableTestMode () {
         setTestMode(true);
     }
 
-    /**
-     * Implicit test disabled setter
-     */
     public void disableTestMode () {
         setTestMode(false);
     }
 
-    /**
-     * Setter for the DAU ID value
-     *
-     * @param dauId the new DAU ID integer
-     */
     public void setDauId(int dauId) {
         this.dauId = dauId;
     }
 
-    /**
-     * Version setter
-     *
-     * @param version new version string
-     */
     public void setVersion(String version) {
         this.version = version;
     }
 
+    public void setInstl(SARTBInstl instl) {
+        this.instl = instl;
+    }
+
+    public void setPos(SARTBPosition pos) {
+        this.pos = pos;
+    }
+
+    public void setSkip(SARTBSkip skip) {
+        this.skip = skip;
+    }
+
+    public void setStartDelay(SARTBStartDelay startDelay) {
+        this.startDelay = startDelay;
+    }
+
+    public void setPlaybackMethod(SARTBPlaybackMethod playbackMethod) {
+        this.playbackMethod = playbackMethod;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     /**
-     * Getter for the base url
-     *
-     * @return the current base URL
+     * Getters
      */
+
     public String getBaseUrl () {
         return baseUrl;
     }
 
-    /**
-     * Getter for the test model
-     *
-     * @return the current testEnabled variable
-     */
     public boolean getTestMode () {
         return testEnabled;
     }
 
-    /**
-     * Getter for the DAU ID
-     *
-     * @return the current dauId variable
-     */
     public int getDauId () {
         return dauId;
     }
 
-    /**
-     * Getter for the version
-     *
-     * @return the current version variable
-     */
     public String getVersion () {
         return version;
     }
 
-    /**
-     * Getter for the configuration
-     *
-     * @return the current configuration variable
-     */
     public SAConfiguration getConfiguration () { return configuration; }
 
-    /**
-     * Getter for the cache buster
-     *
-     * @return a random int
-     */
     public int getCachebuster () {
         return SAUtils.getCacheBuster();
     }
 
-    /**
-     * Getter for the package name
-     *
-     * @return the current package name
-     */
     public String getPackageName () {
         return packageName;
     }
 
-    /**
-     * Getter for the app name
-     *
-     * @return the current app name
-     */
     public String getAppName () {
         return appName;
     }
 
-    /**
-     * Getter for the connection type
-     *
-     * @return the current connection type enum
-     */
     public SAUtils.SAConnectionType getConnectionType () {
         return connectionType;
     }
 
-    /**
-     * Getter for the current language
-     *
-     * @return the current lang variable (as en_US)
-     */
     public String getLang () {
         return lang;
     }
 
-    /**
-     * Getter for the current device
-     *
-     * @return the current device variable ("phone" or "tablet")
-     */
     public String getDevice () {
         return device;
     }
 
-    /**
-     * Getter for the current user agent
-     *
-     * @return the current userAgent variable
-     */
     public String getUserAgent () {
         return userAgent;
+    }
+
+    public SARTBInstl getInstl() {
+        return instl;
+    }
+
+    public SARTBPosition getPos() {
+        return pos;
+    }
+
+    public SARTBSkip getSkip() {
+        return skip;
+    }
+
+    public SARTBStartDelay getStartDelay() {
+        return startDelay;
+    }
+
+    public SARTBPlaybackMethod getPlaybackMethod() {
+        return playbackMethod;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

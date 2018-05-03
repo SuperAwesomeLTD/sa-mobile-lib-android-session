@@ -2,7 +2,7 @@
  * @Copyright:   SuperAwesome Trading Limited 2017
  * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
  */
-package tv.superawesome.lib.sasession;
+package tv.superawesome.lib.sasession.session;
 
 /**
  * Interface for the SASession class

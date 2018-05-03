@@ -10,10 +10,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import tv.superawesome.lib.sasession.SACapper;
-import tv.superawesome.lib.sasession.SACapperInterface;
-import tv.superawesome.lib.sasession.SASession;
-import tv.superawesome.lib.sasession.SASessionInterface;
+import tv.superawesome.lib.sasession.capper.SACapper;
+import tv.superawesome.lib.sasession.capper.SACapperInterface;
 
 public class MainActivity extends AppCompatActivity {
 

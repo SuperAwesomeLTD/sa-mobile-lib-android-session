@@ -2,15 +2,12 @@ package superawesome.tv.sasessiondemo;
 
 import android.app.Application;
 import android.content.res.Resources;
-import android.os.Looper;
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
-import tv.superawesome.lib.sasession.SAConfiguration;
-import tv.superawesome.lib.sasession.SASession;
-import tv.superawesome.lib.sasession.SASessionInterface;
+import tv.superawesome.lib.sasession.defines.SAConfiguration;
+import tv.superawesome.lib.sasession.session.SASession;
 import tv.superawesome.lib.sautils.SAUtils;
 
 /**

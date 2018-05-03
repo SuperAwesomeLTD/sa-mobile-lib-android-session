@@ -90,34 +90,36 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/typedefs.txt" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/poms" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 27 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="play-services-ads-base-15.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="support-core-ui-26.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="play-services-ads-base-15.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="support-media-compat-26.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="hamcrest-library-1.3" level="project" />
-    <orderEntry type="library" name="sautils-1.0.1" level="project" />
+    <orderEntry type="library" name="sautils-1.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="hamcrest-integration-1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="support-core-utils-26.1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="play-services-ads-identifier-15.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="espresso-core-3.0.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="play-services-gass-15.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="espresso-idling-resource-3.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="byte-buddy-agent-1.8.5" level="project" />
-    <orderEntry type="library" scope="TEST" name="play-services-basement-15.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="play-services-gass-15.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="play-services-basement-15.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="play-services-ads-identifier-15.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="json" level="project" />
-    <orderEntry type="library" scope="TEST" name="play-services-ads-15.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="play-services-ads-lite-15.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="objenesis-2.6" level="project" />
-    <orderEntry type="library" scope="TEST" name="play-services-ads-lite-15.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="jsr305-2.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="play-services-ads-15.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="runner-1.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="byte-buddy-1.8.5" level="project" />
     <orderEntry type="library" scope="TEST" name="customtabs-26.1.0" level="project" />
