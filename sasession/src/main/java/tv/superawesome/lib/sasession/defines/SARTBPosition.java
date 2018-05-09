@@ -5,6 +5,7 @@ package tv.superawesome.lib.sasession.defines;
  */
 public enum SARTBPosition {
     ABOVE_THE_FOLD(1),
+    BELOW_THE_FOLD(3),
     FULLSCREEN(7);
 
     private final int value;
@@ -16,6 +17,7 @@ public enum SARTBPosition {
     public static SARTBPosition fromValue (int pos) {
         switch (pos) {
             case 1: return ABOVE_THE_FOLD;
+            case 3: return BELOW_THE_FOLD;
             default: return FULLSCREEN;
         }
     }

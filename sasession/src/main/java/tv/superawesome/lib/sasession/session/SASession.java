@@ -180,6 +180,16 @@ public class SASession {
         this.height = height;
     }
 
+    public void setLanguage (String lang) {
+        this.lang = lang;
+    }
+
+    public void setLanguage (Locale locale) {
+        if (locale != null) {
+            this.lang = locale.toString();
+        }
+    }
+
     /**
      * Getters
      */
