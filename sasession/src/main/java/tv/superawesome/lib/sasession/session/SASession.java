@@ -8,7 +8,10 @@ import android.content.Context;
 import android.os.Looper;
 
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
+import tv.superawesome.lib.sasession.capper.ISACapper;
 import tv.superawesome.lib.sasession.capper.SACapper;
 import tv.superawesome.lib.sasession.capper.SACapperInterface;
 import tv.superawesome.lib.sasession.defines.SAConfiguration;
@@ -23,7 +26,7 @@ import tv.superawesome.lib.sautils.SAUtils;
  * Class that manages an AwesomeAds session, containing all variables needed to setup loading for
  * a certain ad
  */
-public class SASession {
+public class SASession implements ISASession {
 
     // constants
     private final static String      PRODUCTION_URL = "https://ads.superawesome.tv/v2";
@@ -32,7 +35,7 @@ public class SASession {
     private final static String      DEVICE_TABLET = "tablet";
 
     // the current frequency capper
-    private SACapper                 capper = null;
+    private ISACapper                capper = null;
 
     // private state members
     private String                   baseUrl;
@@ -59,9 +62,19 @@ public class SASession {
      *
      * @param context current context (activity or fragment)
      */
-    public SASession(Context context) {
+    public SASession (Context context) {
+        this(context, Executors.newSingleThreadExecutor());
+    }
+
+    /**
+     * Main constructor for the Session
+     *
+     * @param context current context (activity or fragment)
+     * @param executor the executor to run the operations on
+     */
+    public SASession(Context context, Executor executor) {
         // create the capper
-        capper = new SACapper(context);
+        capper = new SACapper(context, executor);
 
         // set default configuration
         setConfigurationProduction();
@@ -97,6 +110,7 @@ public class SASession {
      *
      * @param listener an instance of the SASessionInterface
      */
+    @Override
     public void prepareSession (final SASessionInterface listener) {
         capper.getDauID(new SACapperInterface() {
             @Override
@@ -113,7 +127,6 @@ public class SASession {
     /**
      * Setters
      */
-
     public void setConfiguration(SAConfiguration configuration) {
         if (configuration == SAConfiguration.PRODUCTION) {
             this.configuration = SAConfiguration.PRODUCTION;
@@ -194,76 +207,95 @@ public class SASession {
      * Getters
      */
 
+    @Override
     public String getBaseUrl () {
         return baseUrl;
     }
 
+    @Override
     public boolean getTestMode () {
         return testEnabled;
     }
 
+    @Override
     public int getDauId () {
         return dauId;
     }
 
+    @Override
     public String getVersion () {
         return version;
     }
 
+    @Override
     public SAConfiguration getConfiguration () { return configuration; }
 
+    @Override
     public int getCachebuster () {
         return SAUtils.getCacheBuster();
     }
 
+    @Override
     public String getPackageName () {
         return packageName;
     }
 
+    @Override
     public String getAppName () {
         return appName;
     }
 
+    @Override
     public SAUtils.SAConnectionType getConnectionType () {
         return connectionType;
     }
 
+    @Override
     public String getLang () {
         return lang;
     }
 
+    @Override
     public String getDevice () {
         return device;
     }
 
+    @Override
     public String getUserAgent () {
         return userAgent;
     }
 
+    @Override
     public SARTBInstl getInstl() {
         return instl;
     }
 
+    @Override
     public SARTBPosition getPos() {
         return pos;
     }
 
+    @Override
     public SARTBSkip getSkip() {
         return skip;
     }
 
+    @Override
     public SARTBStartDelay getStartDelay() {
         return startDelay;
     }
 
+    @Override
     public SARTBPlaybackMethod getPlaybackMethod() {
         return playbackMethod;
     }
 
+    @Override
     public int getWidth() {
         return width;
     }
 
+    @Override
     public int getHeight() {
         return height;
     }

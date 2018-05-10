@@ -20,9 +20,8 @@ import tv.superawesome.lib.sautils.SAUtils;
  *  - the package name
  * each hashed and then XOR-ed together
  */
-public class SACapper {
+public class SACapper implements ISACapper {
 
-    private Executor executor;
 
     // constants
     private static final String GOOGLE_ADVERTISING_CLASS = "com.google.android.gms.ads.identifier.AdvertisingIdClient";
@@ -32,7 +31,8 @@ public class SACapper {
     private static final String GOOGLE_ADVERTISING_ID_METHOD = "getId";
     private static final String SUPER_AWESOME_FIRST_PART_DAU = "SUPER_AWESOME_FIRST_PART_DAU";
 
-    // private current context
+    // private current context & executor
+    private Executor executor = null;
     private Context context = null;
 
     /**
@@ -41,8 +41,7 @@ public class SACapper {
      * @param context the current context (activity or fragment)
      */
     public SACapper (Context context) {
-        this.context = context;
-        this.executor = Executors.newSingleThreadExecutor();
+        this(context, Executors.newSingleThreadExecutor());
     }
 
     /**
@@ -59,16 +58,14 @@ public class SACapper {
      * Main capper method that takes an SACapperInterface interface instance as parameter, to be
      * able to sent back the generated ID when the async operation finishes
      *
-     * @param listener1 an instance of the SACapperInterface
+     * @param listener an instance of the SACapperInterface
      */
-    public void getDauID(final SACapperInterface listener1) {
-
-        // get a listener that's never going to be null
-        final SACapperInterface listener = listener1 != null ? listener1 : new SACapperInterface() {@Override public void didFindDAUID(int dauID) {}};
+    @Override
+    public void getDauID(final SACapperInterface listener) {
 
         // guard against this class not being available or th context being null
         if (!SAUtils.isClassAvailable(GOOGLE_ADVERTISING_CLASS) || context == null) {
-            listener.didFindDAUID(0);
+            sendBackMessage(listener, 0);
             return;
         }
 
@@ -115,17 +112,23 @@ public class SACapper {
                         int dauID = Math.abs(hash1 ^ hash2 ^ hash3);
 
                         // finally call the listener to sent the DAU ID
-                        listener.didFindDAUID(dauID);
+                        sendBackMessage(listener, dauID);
                     }
                     // either the service is not available or the user does not have Google Play Services
                     else {
-                        listener.didFindDAUID(0);
+                        sendBackMessage(listener, 0);
                     }
 
                 } catch (Exception e) {
-                    listener.didFindDAUID(0);
+                    sendBackMessage(listener, 0);
                 }
             }
         });
+    }
+
+    private void sendBackMessage (SACapperInterface listener, int  dauId) {
+        if (listener != null) {
+            listener.didFindDAUID(dauId);
+        }
     }
 }
